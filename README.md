@@ -12,6 +12,7 @@ can build your own stats, streaks and leaderboards.
 | Game | Rules | Library |
 |---|---|---|
 | **Sudoku** | Fill the grid so every row, column and box holds each number once. 4×4, 6×6 (mini), 8×8 and 9×9. | `package:puzzle_games/sudoku.dart` |
+| **Star Battle** (Queens) | Place one star in every row, column and coloured region. Stars can't touch, not even diagonally. 5×5 to 10×10. | `package:puzzle_games/star_battle.dart` |
 
 More games are on the way.
 
@@ -129,6 +130,48 @@ SudokuController(
 );
 ```
 
+### Star Battle
+
+```dart
+final controller = StarBattleController(
+  puzzle: const StarBattleGenerator().generate(
+    difficulty: PuzzleDifficulty.medium, // 6×6, 7×7 or 8×8 — or pass size:
+  ),
+  onFinished: (result) => saveResult(result.toJson()),
+);
+
+StarBattleGame(controller: controller);
+```
+
+Tap a cell to step through empty → cross → star. Drag from an empty cell to
+cross out several cells at once. Cells ruled out by a star get a faint cross
+automatically.
+
+```dart
+StarBattleController(
+  puzzle: puzzle,
+  tapCycle: const [StarBattleMark.empty, StarBattleMark.star], // no crosses
+  countMistakes: false,     // count stars placed off the solution
+  revealMistakes: false,    // flag those stars in red
+  highlightConflicts: true, // flag stars that break a rule
+  maxHints: 3,
+);
+
+StarBattleBoard(
+  controller: controller,
+  showAutoCrosses: true,
+  enableDragToCross: true,
+  // Any marker you like, e.g. a crown:
+  markerBuilder: (context, cell, theme, size) => switch (cell.mark) {
+    StarBattleMark.star => Icon(Icons.emoji_events, size: size * 0.7),
+    StarBattleMark.cross => Icon(Icons.close, size: size * 0.4),
+    StarBattleMark.empty => const SizedBox.shrink(),
+  },
+);
+```
+
+Region colours come from `PuzzleTheme.regionColors`.
+
 ### Theming
 
 Widgets follow your app's `ColorScheme` automatically. To customise, register a
@@ -151,7 +194,7 @@ MaterialApp(
 ```
 
 or pass `theme:` to any single widget. For full control of how cells look,
-give `SudokuBoard` a `cellBuilder`.
+give `SudokuBoard` a `cellBuilder`, or `StarBattleBoard` a `markerBuilder`.
 
 ### Results
 

@@ -109,6 +109,15 @@ class _HomePageState extends State<HomePage> {
             )),
           ),
           _GameTile(
+            icon: Icons.star_outline_rounded,
+            title: 'Star Battle',
+            subtitle: 'One star per row, column and colour — no touching',
+            onTap: () => _open(StarBattlePage(
+              difficulty: _difficulty,
+              seed: _seedFor('star_battle'),
+            )),
+          ),
+          _GameTile(
             icon: Icons.grid_4x4_rounded,
             title: 'Classic Sudoku',
             subtitle: '9×9 — the original',
@@ -287,6 +296,69 @@ class _SudokuPageState extends State<SudokuPage> {
         ],
       ),
       body: SafeArea(child: SudokuGame(controller: _controller)),
+    );
+  }
+}
+
+/// A Star Battle screen: generates a puzzle and wires up the result.
+class StarBattlePage extends StatefulWidget {
+  /// Creates a Star Battle page.
+  const StarBattlePage({super.key, required this.difficulty, this.seed});
+
+  /// Puzzle difficulty (sets the grid size).
+  final PuzzleDifficulty difficulty;
+
+  /// Fixed seed (daily puzzle), or `null` for a random puzzle.
+  final int? seed;
+
+  @override
+  State<StarBattlePage> createState() => _StarBattlePageState();
+}
+
+class _StarBattlePageState extends State<StarBattlePage> {
+  late StarBattleController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = _newController(widget.seed);
+  }
+
+  StarBattleController _newController(int? seed) => StarBattleController(
+        puzzle: const StarBattleGenerator().generate(
+          difficulty: widget.difficulty,
+          seed: seed,
+        ),
+        onFinished: (result) => showResultDialog(
+          context,
+          result,
+          onPlayAgain: () => setState(() {
+            _controller.dispose();
+            _controller = _newController(null);
+          }),
+        ),
+      );
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Star Battle ${_controller.size}×${_controller.size}'),
+        actions: [
+          IconButton(
+            tooltip: 'Restart',
+            icon: const Icon(Icons.refresh_rounded),
+            onPressed: _controller.restart,
+          ),
+        ],
+      ),
+      body: SafeArea(child: StarBattleGame(controller: _controller)),
     );
   }
 }
