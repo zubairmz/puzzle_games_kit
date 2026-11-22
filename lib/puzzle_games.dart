@@ -1,5 +1,14 @@
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
-}
+/// Logic puzzle games for Flutter.
+///
+/// Import everything:
+///
+/// ```dart
+/// import 'package:puzzle_games/puzzle_games.dart';
+/// ```
+///
+/// or just one game, for example `package:puzzle_games/sudoku.dart`.
+/// Games you don't use are left out of release builds either way.
+library;
+
+export 'puzzle_core.dart';
+export 'sudoku.dart';
