@@ -4,7 +4,7 @@ import '../core/cell_position.dart';
 import '../core/puzzle_difficulty.dart';
 import 'star_battle_solver.dart';
 
-/// A Star Battle puzzle (also known as "Queens"): a square grid split into
+/// A Star Battle puzzle: a square grid split into
 /// as many coloured regions as it has rows. Place one star in every row,
 /// every column and every region so that no two stars touch, not even
 /// diagonally.

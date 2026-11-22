@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 
+import '../core/puzzle_rules.dart';
 import '../theme/puzzle_theme.dart';
+import '../widgets/puzzle_rules_bar.dart';
 import '../widgets/puzzle_status_bar.dart';
 import 'star_battle_board.dart';
 import 'star_battle_controller.dart';
+import 'star_battle_rules.dart';
 
-/// A complete Star Battle screen body: status bar, board and actions
-/// (undo, clear, hint).
+/// A complete Star Battle screen body: status bar, board, a rules
+/// reminder with a "How to play" button, and actions (undo, clear, hint).
 ///
 /// For a custom layout, use [StarBattleBoard] and [PuzzleStatusBar]
 /// directly with the same controller.
@@ -31,7 +34,10 @@ class StarBattleGame extends StatelessWidget {
     this.showActions = true,
     this.statusBar,
     this.board,
-    this.instructions,
+    this.rules,
+    this.showRulesSummary = true,
+    this.showRulesButton = true,
+    this.rulesBar,
   });
 
   /// The game to show.
@@ -58,13 +64,22 @@ class StarBattleGame extends StatelessWidget {
   /// Replaces the default board.
   final Widget? board;
 
-  /// A short rules reminder shown under the board. `null` shows the
-  /// default text; pass `SizedBox.shrink()` to hide it.
-  final Widget? instructions;
+  /// Text for the rules summary, the "How to play" button and the rules
+  /// sheet. Defaults to [starBattleRules]; change parts with [PuzzleRules.copyWith].
+  final PuzzleRules? rules;
+
+  /// Whether to show the one or two line rules summary under the board.
+  final bool showRulesSummary;
+
+  /// Whether to show the button that opens the full rules sheet.
+  final bool showRulesButton;
+
+  /// Replaces the default [PuzzleRulesBar], for example to use your own
+  /// button or rules sheet.
+  final Widget? rulesBar;
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     return Padding(
       padding: padding,
       child: Column(
@@ -89,20 +104,22 @@ class StarBattleGame extends StatelessWidget {
                   ),
             ),
           ),
-          SizedBox(height: spacing),
-          instructions ??
-              Text(
-                'One star in every row, column and colour. '
-                'Stars can’t touch, not even diagonally.',
-                textAlign: TextAlign.center,
-                style: textTheme.bodyMedium,
-              ),
+          if (rulesBar != null || showRulesSummary || showRulesButton) ...[
+            SizedBox(height: spacing / 2),
+            rulesBar ??
+                PuzzleRulesBar(
+                  rules: rules ?? starBattleRules(),
+                  showSummary: showRulesSummary,
+                  showButton: showRulesButton,
+                ),
+          ],
           if (showActions) ...[
             SizedBox(height: spacing),
             ListenableBuilder(
               listenable: controller,
-              builder: (context, _) => Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              builder: (context, _) => Wrap(
+                alignment: WrapAlignment.spaceEvenly,
+                spacing: 8,
                 children: [
                   TextButton.icon(
                     onPressed: controller.canUndo ? controller.undo : null,

@@ -40,7 +40,7 @@ class ShikakuClue {
   String toString() => 'ShikakuClue($position, $value)';
 }
 
-/// A Shikaku puzzle (also known as "Patches" or "Divide by Squares"): split
+/// A Shikaku puzzle (also known as "Divide by Squares"): split
 /// the grid into rectangles so that each holds exactly one number, and that
 /// number equals the rectangle's area.
 ///

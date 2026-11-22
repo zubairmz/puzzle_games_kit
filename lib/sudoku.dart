@@ -13,4 +13,5 @@ export 'src/sudoku/sudoku_game.dart';
 export 'src/sudoku/sudoku_generator.dart';
 export 'src/sudoku/sudoku_input_pad.dart';
 export 'src/sudoku/sudoku_puzzle.dart';
+export 'src/sudoku/sudoku_rules.dart';
 export 'src/sudoku/sudoku_solver.dart';

@@ -12,8 +12,8 @@ can build your own stats, streaks and leaderboards.
 | Game | Rules | Library |
 |---|---|---|
 | **Sudoku** | Fill the grid so every row, column and box holds each number once. 4×4, 6×6 (mini), 8×8 and 9×9. | `package:puzzle_games/sudoku.dart` |
-| **Star Battle** (Queens) | Place one star in every row, column and coloured region. Stars can't touch, not even diagonally. 5×5 to 10×10. | `package:puzzle_games/star_battle.dart` |
-| **Shikaku** (Patches) | Split the grid into rectangles; each holds exactly one number, and that number is its area. 3×3 to 10×10, square or not. | `package:puzzle_games/shikaku.dart` |
+| **Star Battle** | Place one star in every row, column and coloured region. Stars can't touch, not even diagonally. 5×5 to 10×10. | `package:puzzle_games/star_battle.dart` |
+| **Shikaku** | Split the grid into rectangles; each holds exactly one number, and that number is its area. 3×3 to 10×10, square or not. | `package:puzzle_games/shikaku.dart` |
 
 More games are on the way.
 
@@ -28,6 +28,9 @@ More games are on the way.
   the box, customisable through `PuzzleTheme`.
 - **Controllers** that hold all game logic: undo, hints, notes, mistake limits,
   pause/resume. Use the included widgets or build your own UI.
+- **How to play** built in: a short rules line on every game screen and a
+  button that opens the full rules in a bottom sheet. Show or hide each part,
+  and change or translate every word.
 - **Results** as a `PuzzleResult`, with `toJson()` for saving.
 - **Keyboard support** on desktop and web, and screen-reader labels.
 - Pure Dart logic, no platform code: works on Android, iOS, web, macOS,
@@ -206,6 +209,66 @@ ShikakuBoard(
 );
 ```
 
+### How to play
+
+Every game shows a one or two line rules summary under the board and a
+**How to play** button that opens the full rules (goal, controls, mistakes
+and hints, tips, keyboard) in a bottom sheet.
+
+```dart
+StarBattleGame(
+  controller: controller,
+  showRulesSummary: true, // the short line under the board
+  showRulesButton: true,  // the "How to play" button
+);
+```
+
+All text lives in a `PuzzleRules` object. Start from a game's defaults
+(`sudokuRules()`, `starBattleRules()`, `shikakuRules()`) and change what you
+need, or build your own, for example to translate it:
+
+```dart
+StarBattleGame(
+  controller: controller,
+  rules: starBattleRules().copyWith(
+    summary: 'One crown in every row, column and colour.',
+    buttonLabel: 'Rules',
+    closeLabel: 'Let’s play',
+    sections: const [
+      PuzzleRulesSection(
+        title: 'Goal',
+        body: 'Place one crown in every row, column and colour.',
+        points: ['Crowns can’t touch, not even diagonally.'],
+      ),
+    ],
+  ),
+);
+```
+
+The pieces work on their own too:
+
+```dart
+// Summary and button anywhere in your layout:
+PuzzleRulesBar(rules: shikakuRules());
+
+// Just the button, e.g. as an app bar icon:
+PuzzleRulesButton(rules: sudokuRules(), iconOnly: true);
+
+// Open the sheet yourself, or show your own content in it:
+showPuzzleRulesSheet(context, rules: shikakuRules());
+showPuzzleRulesSheet(
+  context,
+  rules: shikakuRules(),
+  builder: (context, rules) => MyRulesView(rules: rules),
+);
+
+// Or put the rules on a full screen:
+Scaffold(body: SafeArea(child: PuzzleRulesSheet(rules: starBattleRules())));
+```
+
+To replace the bar under the board completely, pass `rulesBar:` to any game
+widget.
+
 ### Theming
 
 Widgets follow your app's `ColorScheme` automatically. To customise, register a
@@ -263,7 +326,9 @@ final puzzle = SudokuPuzzle.parse(
 ## Example
 
 The [example](example) app shows every game with difficulty selection, daily
-puzzles, dark mode and a results dialog.
+puzzles, dark mode, rules settings and a results dialog. It is organised by
+feature (`app/`, `core/`, `features/`), with one shared play page for every
+game.
 
 ## License
 

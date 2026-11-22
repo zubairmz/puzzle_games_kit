@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 
+import '../core/puzzle_rules.dart';
 import '../theme/puzzle_theme.dart';
+import '../widgets/puzzle_rules_bar.dart';
 import '../widgets/puzzle_status_bar.dart';
 import 'sudoku_board.dart';
 import 'sudoku_controller.dart';
 import 'sudoku_input_pad.dart';
+import 'sudoku_rules.dart';
 
-/// A complete Sudoku screen body: status bar, board and input pad.
+/// A complete Sudoku screen body: status bar, board, a rules reminder with
+/// a "How to play" button, and the input pad.
 ///
 /// For a custom layout, use [SudokuBoard], [SudokuInputPad] and
 /// [PuzzleStatusBar] directly with the same controller.
@@ -31,6 +35,10 @@ class SudokuGame extends StatelessWidget {
     this.statusBar,
     this.board,
     this.inputPad,
+    this.rules,
+    this.showRulesSummary = true,
+    this.showRulesButton = true,
+    this.rulesBar,
   });
 
   /// The game to show.
@@ -58,6 +66,20 @@ class SudokuGame extends StatelessWidget {
   /// Replaces the default input pad.
   final Widget? inputPad;
 
+  /// Text for the rules summary, the "How to play" button and the rules
+  /// sheet. Defaults to [sudokuRules]; change parts with [PuzzleRules.copyWith].
+  final PuzzleRules? rules;
+
+  /// Whether to show the one or two line rules summary under the board.
+  final bool showRulesSummary;
+
+  /// Whether to show the button that opens the full rules sheet.
+  final bool showRulesButton;
+
+  /// Replaces the default [PuzzleRulesBar], for example to use your own
+  /// button or rules sheet.
+  final Widget? rulesBar;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -83,6 +105,19 @@ class SudokuGame extends StatelessWidget {
                   ),
             ),
           ),
+          if (rulesBar != null || showRulesSummary || showRulesButton) ...[
+            SizedBox(height: spacing / 2),
+            rulesBar ??
+                PuzzleRulesBar(
+                  rules: rules ??
+                      sudokuRules(
+                        boxRows: controller.puzzle.boxRows,
+                        boxCols: controller.puzzle.boxCols,
+                      ),
+                  showSummary: showRulesSummary,
+                  showButton: showRulesButton,
+                ),
+          ],
           SizedBox(height: spacing),
           inputPad ?? SudokuInputPad(controller: controller, theme: theme),
         ],
