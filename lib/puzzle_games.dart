@@ -11,5 +11,6 @@
 library;
 
 export 'puzzle_core.dart';
+export 'shikaku.dart';
 export 'star_battle.dart';
 export 'sudoku.dart';

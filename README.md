@@ -13,6 +13,7 @@ can build your own stats, streaks and leaderboards.
 |---|---|---|
 | **Sudoku** | Fill the grid so every row, column and box holds each number once. 4×4, 6×6 (mini), 8×8 and 9×9. | `package:puzzle_games/sudoku.dart` |
 | **Star Battle** (Queens) | Place one star in every row, column and coloured region. Stars can't touch, not even diagonally. 5×5 to 10×10. | `package:puzzle_games/star_battle.dart` |
+| **Shikaku** (Patches) | Split the grid into rectangles; each holds exactly one number, and that number is its area. 3×3 to 10×10, square or not. | `package:puzzle_games/shikaku.dart` |
 
 More games are on the way.
 
@@ -172,6 +173,39 @@ StarBattleBoard(
 
 Region colours come from `PuzzleTheme.regionColors`.
 
+### Shikaku
+
+```dart
+final controller = ShikakuController(
+  puzzle: const ShikakuGenerator().generate(
+    difficulty: PuzzleDifficulty.medium, // 5×5, 6×6 or 8×8
+    // or: rows: 6, cols: 8, maxArea: 6,
+  ),
+  onFinished: (result) => saveResult(result.toJson()),
+);
+
+ShikakuGame(controller: controller);
+```
+
+Drag from one corner to the other to draw a rectangle (it shows its size
+while you drag and replaces anything it overlaps). Tap a rectangle to remove
+it. Rectangles that break the rules get a red outline.
+
+```dart
+ShikakuBoard(
+  controller: controller,
+  highlightInvalid: true,
+  showPreviewSize: true,
+  tapToRemove: true,
+  rectBuilder: (context, data, theme) => DecoratedBox(
+    decoration: BoxDecoration(
+      color: data.isValid ? theme.regionColor(data.clueIndex!) : Colors.grey,
+      borderRadius: BorderRadius.circular(12),
+    ),
+  ),
+);
+```
+
 ### Theming
 
 Widgets follow your app's `ColorScheme` automatically. To customise, register a
@@ -194,7 +228,8 @@ MaterialApp(
 ```
 
 or pass `theme:` to any single widget. For full control of how cells look,
-give `SudokuBoard` a `cellBuilder`, or `StarBattleBoard` a `markerBuilder`.
+give `SudokuBoard` a `cellBuilder`, `StarBattleBoard` a `markerBuilder` or
+`ShikakuBoard` a `rectBuilder`.
 
 ### Results
 

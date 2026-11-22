@@ -8,6 +8,11 @@
   solver, controller (custom tap cycle, drag-to-cross strokes, undo, hints,
   optional mistakes) and widgets (`StarBattleGame`, `StarBattleBoard`) with
   automatic crosses, custom markers and keyboard support.
+* Shikaku (also known as Patches): 3×3 to 10×10 grids, square or not, with
+  a unique-solution generator (no one-cell rectangles), solver, controller
+  (undo, hints, optional mistakes) and widgets (`ShikakuGame`,
+  `ShikakuBoard`) with drag-to-draw, a live size preview, rule
+  highlighting, custom rectangles and keyboard support.
 * Shared core: `SeededRandom` (identical on every platform),
   `PuzzleDifficulty`, `PuzzleResult`, `PuzzleTheme`, `PuzzleStatusBar` and
   `PuzzleClockText`.

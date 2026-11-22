@@ -99,6 +99,9 @@ class _StarBattleBoardState extends State<StarBattleBoard> {
   final FocusNode _focusNode = FocusNode(debugLabel: 'StarBattleBoard');
   CellPosition? _cursor;
   bool _hasFocus = false;
+
+  /// The cursor is only drawn once the keyboard is used, not after taps.
+  bool _usingKeyboard = false;
   StarBattleMark? _dragMark;
   CellPosition? _lastDragCell;
 
@@ -110,10 +113,14 @@ class _StarBattleBoardState extends State<StarBattleBoard> {
     super.dispose();
   }
 
+  /// Maps a touch (relative to the board's outer edge, frame included) to a
+  /// cell.
   CellPosition? _cellAt(Offset local, double side) {
     final n = _c.size;
-    final row = (local.dy / side * n).floor();
-    final col = (local.dx / side * n).floor();
+    final frame = PuzzleTheme.of(context, widget.theme).blockLineWidth;
+    final inner = side - frame * 2;
+    final row = ((local.dy - frame) / inner * n).floor();
+    final col = ((local.dx - frame) / inner * n).floor();
     if (row < 0 || col < 0 || row >= n || col >= n) return null;
     return CellPosition(row, col);
   }
@@ -122,7 +129,10 @@ class _StarBattleBoardState extends State<StarBattleBoard> {
     final cell = _cellAt(details.localPosition, side);
     if (cell == null) return;
     if (widget.enableKeyboard) _focusNode.requestFocus();
-    setState(() => _cursor = cell);
+    setState(() {
+      _cursor = cell;
+      _usingKeyboard = false;
+    });
     _c.tap(cell.row, cell.col);
   }
 
@@ -162,6 +172,7 @@ class _StarBattleBoardState extends State<StarBattleBoard> {
     if (event is! KeyDownEvent && event is! KeyRepeatEvent) {
       return KeyEventResult.ignored;
     }
+    if (!_usingKeyboard) setState(() => _usingKeyboard = true);
     final key = event.logicalKey;
     final keyboard = HardwareKeyboard.instance;
     if ((keyboard.isControlPressed || keyboard.isMetaPressed) &&
@@ -278,7 +289,7 @@ class _StarBattleBoardState extends State<StarBattleBoard> {
                       thickColor: theme.blockLineColor,
                       thinWidth: theme.gridLineWidth,
                       thickWidth: theme.blockLineWidth,
-                      cursor: _hasFocus ? _cursor : null,
+                      cursor: _hasFocus && _usingKeyboard ? _cursor : null,
                       cursorColor: theme.entryTextColor,
                     ),
                   ),

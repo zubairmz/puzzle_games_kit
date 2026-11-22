@@ -118,6 +118,15 @@ class _HomePageState extends State<HomePage> {
             )),
           ),
           _GameTile(
+            icon: Icons.dashboard_outlined,
+            title: 'Shikaku',
+            subtitle: 'Split the grid into rectangles of the given sizes',
+            onTap: () => _open(ShikakuPage(
+              difficulty: _difficulty,
+              seed: _seedFor('shikaku'),
+            )),
+          ),
+          _GameTile(
             icon: Icons.grid_4x4_rounded,
             title: 'Classic Sudoku',
             subtitle: '9×9 — the original',
@@ -359,6 +368,70 @@ class _StarBattlePageState extends State<StarBattlePage> {
         ],
       ),
       body: SafeArea(child: StarBattleGame(controller: _controller)),
+    );
+  }
+}
+
+/// A Shikaku screen: generates a puzzle and wires up the result.
+class ShikakuPage extends StatefulWidget {
+  /// Creates a Shikaku page.
+  const ShikakuPage({super.key, required this.difficulty, this.seed});
+
+  /// Puzzle difficulty (sets the grid size).
+  final PuzzleDifficulty difficulty;
+
+  /// Fixed seed (daily puzzle), or `null` for a random puzzle.
+  final int? seed;
+
+  @override
+  State<ShikakuPage> createState() => _ShikakuPageState();
+}
+
+class _ShikakuPageState extends State<ShikakuPage> {
+  late ShikakuController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = _newController(widget.seed);
+  }
+
+  ShikakuController _newController(int? seed) => ShikakuController(
+        puzzle: const ShikakuGenerator().generate(
+          difficulty: widget.difficulty,
+          seed: seed,
+        ),
+        onFinished: (result) => showResultDialog(
+          context,
+          result,
+          onPlayAgain: () => setState(() {
+            _controller.dispose();
+            _controller = _newController(null);
+          }),
+        ),
+      );
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final puzzle = _controller.puzzle;
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Shikaku ${puzzle.rows}×${puzzle.cols}'),
+        actions: [
+          IconButton(
+            tooltip: 'Restart',
+            icon: const Icon(Icons.refresh_rounded),
+            onPressed: _controller.restart,
+          ),
+        ],
+      ),
+      body: SafeArea(child: ShikakuGame(controller: _controller)),
     );
   }
 }
