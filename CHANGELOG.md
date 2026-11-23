@@ -1,3 +1,8 @@
+## 0.1.1
+
+* README and pub.dev page: animated previews of every game and of the How to
+  play sheet.
+
 ## 0.1.0
 
 * Sudoku: 4×4, 6×6, 8×8 and 9×9 grids with a unique-solution generator,

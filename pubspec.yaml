@@ -1,9 +1,19 @@
 name: puzzle_games_kit
 description: "Logic puzzle games for Flutter with puzzle generators, difficulty levels, themeable widgets and a results callback for stats and leaderboards."
-version: 0.1.0
+version: 0.1.1
 homepage: https://github.com/zubairmz/puzzle_games_kit
 repository: https://github.com/zubairmz/puzzle_games_kit
 issue_tracker: https://github.com/zubairmz/puzzle_games_kit/issues
+
+screenshots:
+  - description: Solving a 6×6 Sudoku with the number pad and hints.
+    path: screenshots/sudoku.gif
+  - description: Placing stars in a 7×7 Star Battle until it is solved.
+    path: screenshots/star_battle.gif
+  - description: Dragging rectangles in a 6×6 Shikaku until it is solved.
+    path: screenshots/shikaku.gif
+  - description: The built-in How to play sheet with the full rules.
+    path: screenshots/how_to_play.gif
 
 topics:
   - puzzle

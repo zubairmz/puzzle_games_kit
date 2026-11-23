@@ -7,6 +7,12 @@ solution), **difficulty levels**, **ready-made widgets** that follow your app's
 theme, and a **results callback** with time, mistakes, hints and moves, so you
 can build your own stats, streaks and leaderboards.
 
+| Sudoku | Star Battle | Shikaku |
+|:---:|:---:|:---:|
+| <img src="https://raw.githubusercontent.com/zubairmz/puzzle_games_kit/main/screenshots/sudoku.gif" width="240" alt="Solving a 6×6 Sudoku with the number pad and hints"> | <img src="https://raw.githubusercontent.com/zubairmz/puzzle_games_kit/main/screenshots/star_battle.gif" width="240" alt="Placing stars in a 7×7 Star Battle until it is solved"> | <img src="https://raw.githubusercontent.com/zubairmz/puzzle_games_kit/main/screenshots/shikaku.gif" width="240" alt="Dragging rectangles in a 6×6 Shikaku until it is solved"> |
+
+*Recorded from the [example app](example/) on an iPhone simulator.*
+
 ## Games
 
 | Game | Rules | Library |
@@ -40,7 +46,7 @@ More games are on the way.
 
 ```yaml
 dependencies:
-  puzzle_games_kit: ^0.1.0
+  puzzle_games_kit: ^0.1.1
 ```
 
 ```dart
@@ -214,6 +220,8 @@ ShikakuBoard(
 Every game shows a one or two line rules summary under the board and a
 **How to play** button that opens the full rules (goal, controls, mistakes
 and hints, tips, keyboard) in a bottom sheet.
+
+<img src="https://raw.githubusercontent.com/zubairmz/puzzle_games_kit/main/screenshots/how_to_play.gif" width="240" alt="Opening the How to play sheet in Star Battle and scrolling through the rules">
 
 ```dart
 StarBattleGame(
