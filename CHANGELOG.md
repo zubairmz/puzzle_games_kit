@@ -1,3 +1,11 @@
+## 0.2.0
+
+* `saveState()` and `restoreState()` on every controller: save a game in
+  progress (board, time played, moves, mistakes, hints) as JSON and carry on
+  later, even on another device.
+* Custom controllers must implement `encodeBoard()` and `decodeBoard()`.
+* `restart()` now also clears time passed in as `initialElapsed`.
+
 ## 0.1.1
 
 * README and pub.dev page: animated previews of every game and of the How to

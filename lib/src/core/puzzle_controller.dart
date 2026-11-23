@@ -50,7 +50,7 @@ abstract class PuzzleController<P, S> extends ChangeNotifier {
   Map<String, Object?> get resultDetails => const {};
 
   final Stopwatch _stopwatch = Stopwatch();
-  final Duration _elapsedBefore;
+  Duration _elapsedBefore;
   final List<S> _undoStack = [];
 
   int _moves = 0;
@@ -131,11 +131,59 @@ abstract class PuzzleController<P, S> extends ChangeNotifier {
     _solved = false;
     _result = null;
     resetBoard();
+    _elapsedBefore = Duration.zero;
     _stopwatch
       ..reset()
       ..start();
     notifyListeners();
   }
+
+  /// The game in progress as JSON: the board, the time played and the
+  /// counters. Store it anywhere and pass it to [restoreState] later (on
+  /// another launch or device) to carry on where the player left off.
+  ///
+  /// The undo history is not included.
+  Map<String, Object?> saveState() => {
+        'version': 1,
+        'gameId': gameId,
+        'elapsedMs': elapsed.inMilliseconds,
+        'moves': _moves,
+        'mistakes': _mistakes,
+        'hintsUsed': _hintsUsed,
+        'board': encodeBoard(),
+      };
+
+  /// Restores a game saved with [saveState] for the same puzzle.
+  ///
+  /// The clock keeps its running or paused state and continues from the
+  /// saved time. Throws [ArgumentError] if [state] belongs to another game
+  /// or doesn't fit this puzzle. Does nothing once the game is finished.
+  void restoreState(Map<String, Object?> state) {
+    if (_finished) return;
+    final savedGame = state['gameId'];
+    if (savedGame != null && savedGame != gameId) {
+      throw ArgumentError.value(savedGame, 'state', 'is for another game');
+    }
+    decodeBoard(state['board']);
+    _moves = (state['moves'] as num?)?.toInt() ?? 0;
+    _mistakes = (state['mistakes'] as num?)?.toInt() ?? 0;
+    _hintsUsed = (state['hintsUsed'] as num?)?.toInt() ?? 0;
+    _elapsedBefore =
+        Duration(milliseconds: (state['elapsedMs'] as num?)?.toInt() ?? 0);
+    _stopwatch.reset();
+    _undoStack.clear();
+    checkCompletion();
+    notifyListeners();
+  }
+
+  /// The board as JSON-friendly values, for [saveState].
+  @protected
+  Object? encodeBoard();
+
+  /// Restores a board from [encodeBoard]. Throws [ArgumentError] if [data]
+  /// doesn't fit the puzzle.
+  @protected
+  void decodeBoard(Object? data);
 
   /// A copy of the board state, for undo.
   @protected

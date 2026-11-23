@@ -291,6 +291,35 @@ class SudokuController extends PuzzleController<SudokuPuzzle, SudokuSnapshot> {
   }
 
   @override
+  Object? encodeBoard() =>
+      {'values': List<int>.of(_values), 'notes': List<int>.of(_notes)};
+
+  @override
+  void decodeBoard(Object? data) {
+    if (data is! Map) throw ArgumentError.value(data, 'board');
+    final values = _intList(data['values']);
+    final notes = _intList(data['notes']);
+    if (values.length != puzzle.cellCount || notes.length != puzzle.cellCount) {
+      throw ArgumentError.value(data, 'board', 'does not fit this puzzle');
+    }
+    for (var i = 0; i < values.length; i++) {
+      final given = puzzle.givens[i];
+      if (values[i] < 0 ||
+          values[i] > size ||
+          (given != 0 && values[i] != given)) {
+        throw ArgumentError.value(data, 'board', 'does not fit this puzzle');
+      }
+    }
+    _values = values;
+    _notes = notes;
+  }
+
+  static List<int> _intList(Object? raw) {
+    if (raw is! List) throw ArgumentError.value(raw, 'board');
+    return [for (final v in raw) (v as num).toInt()];
+  }
+
+  @override
   SudokuSnapshot takeSnapshot() =>
       (values: List<int>.of(_values), notes: List<int>.of(_notes));
 

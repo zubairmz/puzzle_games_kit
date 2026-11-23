@@ -37,6 +37,8 @@ More games are on the way.
 - **How to play** built in: a short rules line on every game screen and a
   button that opens the full rules in a bottom sheet. Show or hide each part,
   and change or translate every word.
+- **Save and resume** a game in progress with `saveState()` / `restoreState()`,
+  as plain JSON.
 - **Results** as a `PuzzleResult`, with `toJson()` for saving.
 - **Keyboard support** on desktop and web, and screen-reader labels.
 - Pure Dart logic, no platform code: works on Android, iOS, web, macOS,
@@ -46,7 +48,7 @@ More games are on the way.
 
 ```yaml
 dependencies:
-  puzzle_games_kit: ^0.1.1
+  puzzle_games_kit: ^0.2.0
 ```
 
 ```dart
@@ -322,6 +324,23 @@ PuzzleResult(
 
 The package never stores or sends anything itself; where results go is up to
 your app.
+
+### Saving and resuming
+
+Save a game in progress as JSON, for example when the player leaves the
+screen or the app goes to the background, and restore it later, even on
+another device:
+
+```dart
+final state = controller.saveState(); // board, time played, counters
+await storage.write(jsonEncode(state));
+
+// Later, with a controller for the same puzzle:
+controller.restoreState(jsonDecode(await storage.read()));
+```
+
+The clock continues from the saved time. Pair it with a stored puzzle
+(`puzzle.toJson()`) or its seed to bring back the exact same game.
 
 ### Your own puzzles
 

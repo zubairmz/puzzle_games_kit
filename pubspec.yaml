@@ -1,6 +1,6 @@
 name: puzzle_games_kit
 description: "Logic puzzle games for Flutter with puzzle generators, difficulty levels, themeable widgets and a results callback for stats and leaderboards."
-version: 0.1.1
+version: 0.2.0
 homepage: https://github.com/zubairmz/puzzle_games_kit
 repository: https://github.com/zubairmz/puzzle_games_kit
 issue_tracker: https://github.com/zubairmz/puzzle_games_kit/issues

@@ -230,6 +230,22 @@ class StarBattleController
     return true;
   }
 
+  /// Saved as one number per cell: the [StarBattleMark] index.
+  @override
+  Object? encodeBoard() => [for (final m in _marks) m.index];
+
+  @override
+  void decodeBoard(Object? data) {
+    if (data is! List || data.length != size * size) {
+      throw ArgumentError.value(data, 'board', 'does not fit this puzzle');
+    }
+    _marks = [
+      for (final v in data)
+        StarBattleMark.values[
+            (v as num).toInt().clamp(0, StarBattleMark.values.length - 1)],
+    ];
+  }
+
   @override
   List<StarBattleMark> takeSnapshot() => List.of(_marks);
 

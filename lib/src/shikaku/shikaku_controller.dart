@@ -153,6 +153,27 @@ class ShikakuController
   }
 
   @override
+  Object? encodeBoard() => [for (final r in _rects) r.toJson()];
+
+  @override
+  void decodeBoard(Object? data) {
+    if (data is! List) throw ArgumentError.value(data, 'board');
+    final rects = [
+      for (final r in data)
+        GridRect.fromJson(Map<String, Object?>.from(r as Map)),
+    ];
+    for (final r in rects) {
+      if (r.top < 0 ||
+          r.left < 0 ||
+          r.bottom >= puzzle.rows ||
+          r.right >= puzzle.cols) {
+        throw ArgumentError.value(data, 'board', 'does not fit this puzzle');
+      }
+    }
+    _rects = rects;
+  }
+
+  @override
   List<GridRect> takeSnapshot() => List.of(_rects);
 
   @override
