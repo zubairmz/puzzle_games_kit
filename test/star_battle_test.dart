@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:puzzle_games/star_battle.dart';
+import 'package:puzzle_games_kit/star_battle.dart';
 
 bool _regionsConnected(StarBattlePuzzle p) {
   final n = p.size;

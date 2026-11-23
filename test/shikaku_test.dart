@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:puzzle_games/shikaku.dart';
+import 'package:puzzle_games_kit/shikaku.dart';
 
 String _describe(ShikakuPuzzle p) => p.clues
     .map((c) => '${c.position.row}${c.position.col}:${c.value}')

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:puzzle_games/puzzle_games.dart';
+import 'package:puzzle_games_kit/puzzle_games_kit.dart';
 
 /// App-wide settings: theme, difficulty, daily puzzles and how much of the
 /// rules each game shows.

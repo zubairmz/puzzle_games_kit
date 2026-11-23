@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:puzzle_games/puzzle_games.dart';
-import 'package:puzzle_games_example/app/app.dart';
-import 'package:puzzle_games_example/core/settings/app_settings.dart';
-import 'package:puzzle_games_example/features/home/data/game_catalog.dart';
+import 'package:puzzle_games_kit/puzzle_games_kit.dart';
+import 'package:puzzle_games_kit_example/app/app.dart';
+import 'package:puzzle_games_kit_example/core/settings/app_settings.dart';
+import 'package:puzzle_games_kit_example/features/home/data/game_catalog.dart';
 
 void main() {
   late AppSettings settings;

@@ -1,4 +1,4 @@
-# puzzle_games
+# puzzle_games_kit
 
 Logic puzzle games for Flutter, ready to drop into any app.
 
@@ -11,9 +11,9 @@ can build your own stats, streaks and leaderboards.
 
 | Game | Rules | Library |
 |---|---|---|
-| **Sudoku** | Fill the grid so every row, column and box holds each number once. 4×4, 6×6 (mini), 8×8 and 9×9. | `package:puzzle_games/sudoku.dart` |
-| **Star Battle** | Place one star in every row, column and coloured region. Stars can't touch, not even diagonally. 5×5 to 10×10. | `package:puzzle_games/star_battle.dart` |
-| **Shikaku** | Split the grid into rectangles; each holds exactly one number, and that number is its area. 3×3 to 10×10, square or not. | `package:puzzle_games/shikaku.dart` |
+| **Sudoku** | Fill the grid so every row, column and box holds each number once. 4×4, 6×6 (mini), 8×8 and 9×9. | `package:puzzle_games_kit/sudoku.dart` |
+| **Star Battle** | Place one star in every row, column and coloured region. Stars can't touch, not even diagonally. 5×5 to 10×10. | `package:puzzle_games_kit/star_battle.dart` |
+| **Shikaku** | Split the grid into rectangles; each holds exactly one number, and that number is its area. 3×3 to 10×10, square or not. | `package:puzzle_games_kit/shikaku.dart` |
 
 More games are on the way.
 
@@ -40,11 +40,11 @@ More games are on the way.
 
 ```yaml
 dependencies:
-  puzzle_games: ^0.1.0
+  puzzle_games_kit: ^0.1.0
 ```
 
 ```dart
-import 'package:puzzle_games/sudoku.dart'; // or puzzle_games.dart for all games
+import 'package:puzzle_games_kit/sudoku.dart'; // or puzzle_games_kit.dart for all games
 ```
 
 ## Usage

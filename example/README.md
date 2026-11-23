@@ -1,6 +1,6 @@
-# puzzle_games example
+# puzzle_games_kit example
 
-A demo app for the `puzzle_games` package: pick a game and difficulty, try
+A demo app for the `puzzle_games_kit` package: pick a game and difficulty, try
 daily puzzles and dark mode, show or hide the rules, and see the result when
 you finish.
 
@@ -37,7 +37,7 @@ lib/
 
 ## State management
 
-No extra package. The game controllers from `puzzle_games` are
+No extra package. The game controllers from `puzzle_games_kit` are
 `ChangeNotifier`s, and the app settings use the same approach: an
 `AppSettings` `ChangeNotifier` provided through an `InheritedNotifier`.
 In your own app you can hold the controllers in whatever you already use

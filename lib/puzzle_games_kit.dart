@@ -3,10 +3,10 @@
 /// Import everything:
 ///
 /// ```dart
-/// import 'package:puzzle_games/puzzle_games.dart';
+/// import 'package:puzzle_games_kit/puzzle_games_kit.dart';
 /// ```
 ///
-/// or just one game, for example `package:puzzle_games/sudoku.dart`.
+/// or just one game, for example `package:puzzle_games_kit/sudoku.dart`.
 /// Games you don't use are left out of release builds either way.
 library;
 

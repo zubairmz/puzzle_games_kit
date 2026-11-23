@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:puzzle_games/puzzle_games.dart';
+import 'package:puzzle_games_kit/puzzle_games_kit.dart';
 
 import '../../shikaku/shikaku_screen.dart';
 import '../../star_battle/star_battle_screen.dart';

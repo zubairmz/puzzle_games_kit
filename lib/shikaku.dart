@@ -2,7 +2,7 @@
 /// that each holds exactly one number, and that number is its area.
 ///
 /// ```dart
-/// import 'package:puzzle_games/shikaku.dart';
+/// import 'package:puzzle_games_kit/shikaku.dart';
 /// ```
 library;
 

@@ -3,7 +3,7 @@
 /// diagonally.
 ///
 /// ```dart
-/// import 'package:puzzle_games/star_battle.dart';
+/// import 'package:puzzle_games_kit/star_battle.dart';
 /// ```
 library;
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:puzzle_games/sudoku.dart';
+import 'package:puzzle_games_kit/sudoku.dart';
 
 import '../../core/settings/app_settings_scope.dart';
 import '../play/play_page.dart';

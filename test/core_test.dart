@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:puzzle_games/puzzle_core.dart';
+import 'package:puzzle_games_kit/puzzle_core.dart';
 
 void main() {
   group('SeededRandom', () {

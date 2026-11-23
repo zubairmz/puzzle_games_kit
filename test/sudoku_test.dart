@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:puzzle_games/sudoku.dart';
+import 'package:puzzle_games_kit/sudoku.dart';
 
 bool _isValidSolution(SudokuPuzzle p) {
   final n = p.size;

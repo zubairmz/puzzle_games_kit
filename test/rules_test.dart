@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:puzzle_games/puzzle_games.dart';
+import 'package:puzzle_games_kit/puzzle_games_kit.dart';
 
 Widget _app(Widget child) => MaterialApp(home: Scaffold(body: child));
 

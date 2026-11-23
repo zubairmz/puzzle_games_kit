@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:puzzle_games/puzzle_games.dart';
+import 'package:puzzle_games_kit/puzzle_games_kit.dart';
 
 /// Builds a game screen for a difficulty and an optional daily seed.
 typedef GameScreenBuilder = Widget Function(

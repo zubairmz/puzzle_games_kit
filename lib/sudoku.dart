@@ -2,7 +2,7 @@
 /// exactly once. Supports 4×4, 6×6 (mini), 8×8 and 9×9 grids.
 ///
 /// ```dart
-/// import 'package:puzzle_games/sudoku.dart';
+/// import 'package:puzzle_games_kit/sudoku.dart';
 /// ```
 library;
 
